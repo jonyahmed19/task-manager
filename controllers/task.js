@@ -2,7 +2,26 @@ const Task = require("../models/task");
 
 exports.getTasks = async (req, res) => {
   try {
-    const tasks = await Task.find();
+    let { sort: sortValue, page: items } = req.query;
+
+    console.log("sortValue", sortValue);
+    if (sortValue === undefined) {
+      sortValue = 1;
+    } else {
+      sortValue = parseInt(sortValue);
+    }
+    if (items === undefined || items === 1) {
+      items = 0;
+    } else {
+      items = 10 * (parseInt(items) - 1);
+    }
+
+    const tasks = await Task.aggregate([
+      { $sort: { updatedAt: sortValue } },
+      { $skip: items },
+      { $limit: 10 },
+    ]);
+
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ msg: error.message });
@@ -60,4 +79,3 @@ exports.updateTask = async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 };
-

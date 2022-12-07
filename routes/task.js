@@ -9,18 +9,17 @@ const {
   updateTask,
 } = require("../controllers/task");
 
-router.get("/test",async(req,res)=>{
-    res.json({
-        status:"Success",
-        "message":"Hello world"
-    })
-})
+router.get("/health", async (req, res) => {
+  res.json({
+    status: "Success",
+    message: "API is working",
+  });
+});
+
 router.get("/", getTasks);
 router.post("/", createTask);
 router.get("/:id", getTask);
 router.delete("/:id", deleteTask);
 router.put("/:id", updateTask);
-
-
 
 module.exports = router;

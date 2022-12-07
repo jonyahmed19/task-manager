@@ -6,13 +6,22 @@ const taskSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a task"],
     },
-    completed: {
-      type: Boolean,
-      required: true,
-      default: false,
-    }
+    description: {
+      type: String,
+    },
+    priority: {
+      type: String,
+      enum: ["normal", "medium", "high"],
+      default: "normal",
+    },
+    status: {
+      type: String,
+      enum: ["up comming", "on prograss", "completed"],
+      required: [true, "Status must not be empty!"],
+      default: "up comming",
+    },
   },
-  { timestamps: true,versionKey: false }
+  { timestamps: true, versionKey: false }
 );
 
 const Task = mongoose.model("Task", taskSchema);
