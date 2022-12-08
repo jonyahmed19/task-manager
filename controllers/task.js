@@ -4,7 +4,7 @@ exports.getTasks = async (req, res) => {
   try {
     let { sort: sortValue, page: items } = req.query;
 
-    console.log("sortValue", sortValue);
+    
     if (sortValue === undefined) {
       sortValue = 1;
     } else {
